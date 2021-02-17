@@ -18,8 +18,9 @@ class CreateBorrowsTable extends Migration
             $table->integer('item_id');
             $table->integer('user_id');
             $table->integer('borrow_state_id');
-            $table->timestamps();
+
             $table->date('return_date')->nullable();
+            $table->timestamps();
         });
     }
 

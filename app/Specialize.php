@@ -9,6 +9,8 @@ class Specialize extends Model
 {
     protected $table = 'specializes';
 
+    protected $fillable = ['name'];
+
     public function getSubjects()
     {
         return $this->hasMany('App\Subject','specialize_id');

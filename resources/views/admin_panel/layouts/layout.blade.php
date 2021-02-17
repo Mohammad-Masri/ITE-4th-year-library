@@ -47,6 +47,14 @@
 {{--    <link href="css/theme.css" rel="stylesheet" media="all">--}}
     {!! Html::style('admin/css/theme.css') !!}
 
+
+    {!! Html::style('admin/css/AdminLTE/AdminLTE.css') !!}
+    {!! Html::style('admin/css/AdminLTE/_all-skins.min.css') !!}
+
+
+
+    @yield('header')
+
 </head>
 
 <body class="animsition">
@@ -103,6 +111,7 @@
 {!! Html::script('admin/vendor/bootstrap-4.1/bootstrap.min.js') !!}
 
 <!-- Vendor JS       -->
+
 {{--<script src="admin/vendor/slick/slick.min.js"></script>--}}
 {!! Html::script('admin/vendor/slick/slick.min.js') !!}
 
@@ -137,6 +146,10 @@
 {{--<script src="admin/js/main.js"></script>--}}
 {!! Html::script('admin/js/main.js') !!}
 
+
+
+
+@yield('footer')
 
 </body>
 

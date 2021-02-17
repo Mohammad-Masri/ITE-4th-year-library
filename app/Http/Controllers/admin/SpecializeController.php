@@ -4,12 +4,13 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Specialize;
 
 class SpecializeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
     /**
      * Display a listing of the resource.
@@ -18,7 +19,8 @@ class SpecializeController extends Controller
      */
     public function index()
     {
-        return view('admin_panel.specializes.index');
+        $specializes = Specialize::all();
+        return view('admin_panel.specializes.index',compact('specializes'));
 
     }
 
@@ -40,7 +42,9 @@ class SpecializeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Specialize::create(['name'=>$request->name]);
+        return redirect()->route('specialize.index');
+
     }
 
     /**
@@ -51,8 +55,7 @@ class SpecializeController extends Controller
      */
     public function show($id)
     {
-        return view('admin_panel.specializes.detile');
-
+        //
     }
 
     /**
@@ -63,7 +66,8 @@ class SpecializeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $specialize = Specialize::find($id);
+        return view('admin_panel.specializes.edit',compact('specialize'));
     }
 
     /**
@@ -75,7 +79,10 @@ class SpecializeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $specialize = Specialize::find($id);
+        $specialize->name = $request->name;
+        $specialize->save();
+        return redirect()->route('specialize.index');
     }
 
     /**

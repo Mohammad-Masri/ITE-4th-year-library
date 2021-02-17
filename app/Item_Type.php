@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item_Type extends Model
 {
     protected $table = 'item_types';
+    protected $fillable = ['name'];
 
 
     public function getItems()

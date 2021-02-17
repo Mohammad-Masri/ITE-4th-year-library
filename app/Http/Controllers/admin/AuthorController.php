@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Author;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class AuthorController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +20,8 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        return view('admin_panel.author.index');
+        $authors =  Author::all();
+        return view('admin_panel.author.index',compact('authors'));
     }
 
     /**
@@ -40,7 +42,14 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'mobile'=> ['required','numeric','min:10']
+        ]);
+
+        Author::create($data);
+        return redirect()->route('author.index');
     }
 
     /**
@@ -51,7 +60,7 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
-        return view('admin_panel.author.detile');
+        //
 
     }
 
@@ -63,7 +72,8 @@ class AuthorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $author = Author::find($id);
+        return view('admin_panel.author.edit',compact('author'));
     }
 
     /**
@@ -75,7 +85,19 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'mobile'=> ['required','numeric','min:10']
+        ]);
+
+        $author = Author::find($id);
+        $author->first_name = $data['first_name'];
+        $author->last_name = $data['last_name'];
+        $author->mobile = $data['mobile'];
+        $author->save();
+        return redirect()->route('author.index');
+
     }
 
     /**

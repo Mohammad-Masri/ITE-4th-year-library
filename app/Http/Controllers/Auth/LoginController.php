@@ -15,7 +15,7 @@ class LoginController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
+    | redirecting them to your home screen. The controller uses a traits
     | to conveniently provide its functionality to your applications.
     |
     */
@@ -41,7 +41,7 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        if (auth()->user()->getRole->id == 1)
+        if (auth()->user()->getRole->id == 1  || auth()->user()->getRole->id == 3)
         {
             return 'admin/index';
         }

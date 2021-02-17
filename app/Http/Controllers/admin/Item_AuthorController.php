@@ -10,7 +10,7 @@ class Item_AuthorController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
     /**
      * Display a listing of the resource.

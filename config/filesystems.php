@@ -20,7 +20,7 @@ return [
     | Default Cloud Filesystem Disk
     |--------------------------------------------------------------------------
     |
-    | Many applications store files both locally and in the cloud. For this
+    | Many applications store item_files both locally and in the cloud. For this
     | reason, you may specify a default "cloud" driver here. This driver
     | will be bound as the Cloud disk implementation in the container.
     |
@@ -54,6 +54,7 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+
 
         's3' => [
             'driver' => 's3',

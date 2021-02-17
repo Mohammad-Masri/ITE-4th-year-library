@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Borrow_State;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class Borrow_StateController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +20,8 @@ class Borrow_StateController extends Controller
      */
     public function index()
     {
-        //
+        $borrow_states = Borrow_State::all();
+        return view('admin_panel.borrow_states.index',compact('borrow_states'));
     }
 
     /**
@@ -29,7 +31,7 @@ class Borrow_StateController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin_panel.borrow_states.create');
     }
 
     /**
@@ -40,7 +42,12 @@ class Borrow_StateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+
+        Borrow_State::create($data);
+        return redirect()->route('borrow_state.index');
     }
 
     /**
@@ -62,7 +69,8 @@ class Borrow_StateController extends Controller
      */
     public function edit($id)
     {
-        //
+        $borrow_state = Borrow_State::find($id);
+        return view('admin_panel.borrow_states.edit',compact('borrow_state'));
     }
 
     /**
@@ -74,7 +82,13 @@ class Borrow_StateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $borrow_state = Borrow_State::find($id);
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+        $borrow_state->name = $data['name'];
+        $borrow_state->save();
+        return redirect()->route('borrow_state.index');
     }
 
     /**

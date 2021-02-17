@@ -1,24 +1,40 @@
 <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
-        control panel
+        <a href="{{route('home')}}">go to website</a>
     </div>
     <div class="menu-sidebar__content js-scrollbar1">
         <nav class="navbar-sidebar">
             <ul class="list-unstyled navbar__list">
+
                 <li class=" has-sub">
                     <a class="js-arrow" href="#">
                         <i class="fas fa-tachometer-alt"></i>الاستعارة</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
 
                         <li>
-                            <a href="{{route('borrow.create')}}">تسجيل استعارة جديدة</a>
+                            <a href="{{route('borrow.setitem')}}">تسجيل استعارة جديدة</a>
                         </li>
                         <li>
                             <a href="{{route('borrow.index')}}">إدارة الاستعارات</a>
                         </li>
+                        <li>
+                            <a href="{{route('borrow_state.index')}}">إدارة حالات الاستعارات</a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('borrow.extend.all')}}">طلبات تمديد الاستعارة</a>
+                        </li>
+
+
+
+
 
                     </ul>
                 </li>
+
+
+
+
 
                 <li class=" has-sub">
                     <a class="js-arrow" href="#">
@@ -29,6 +45,13 @@
                         </li>
                         <li>
                             <a href="{{route('user.index')}}">إدارة المستخدمين</a>
+                        </li>
+                        <li>
+                            <a href="{{route('role.index')}}">إدارة أدوار المستخدمون</a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('user.add_user_request')}}"> طلبات تسجيل العضوية </a>
                         </li>
 
                     </ul>
@@ -42,17 +65,26 @@
                             <a href="{{route('item.create')}}">إضافة عنصر جديد</a>
                         </li>
                         <li>
-                            <a href="{{route('item.index')}}">إدارة العناص</a>
+                            <a href="{{route('item.index')}}">إدارة العناصر</a>
                         </li>
-                        <li>
-                            <a href="{{route('item_type.create')}}">إضافة نوع عنصر جديد</a>
-                        </li>
+
                         <li>
                             <a href="{{route('item_type.index')}}">إدارة أنواع العناصر</a>
+                        </li>
+                        <li>
+                            <a href="{{route('item_state.index')}}">إدارة أنواع حالات العناصر</a>
+                        </li>
+                        <li>
+                            <a href="{{route('tag.index')}}">إدارة ال tags</a>
+                        </li>
+
+                        <li>
+                            <a href="{{route('item.add_item_request')}}">طلبات إضافة العناصر</a>
                         </li>
 
                     </ul>
                 </li>
+
 
                 <li class=" has-sub">
                     <a class="js-arrow" href="#">
@@ -89,6 +121,20 @@
                         <li>
                             <a href="{{route('specialize.index')}}">إدارة الاختصاصات</a>
                         </li>
+                    </ul>
+                </li>
+
+                <li class=" has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-tachometer-alt"></i>إعدادات الموقع</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a href="{{route('site_setting.create')}}">إضافة إعداد جديد</a>
+                        </li>
+                        <li>
+                            <a href="{{route('site_setting.index')}}">إدارة الإعدادات</a>
+                        </li>
+
                     </ul>
                 </li>
 

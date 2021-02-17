@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
     /**
      * Display a listing of the resource.
@@ -18,7 +19,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+        return view('admin_panel.roles.index',compact('roles'));
     }
 
     /**
@@ -28,7 +30,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin_panel.roles.create');
     }
 
     /**
@@ -39,7 +41,12 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+
+        Role::create($data);
+        return redirect()->route('role.index');
     }
 
     /**
@@ -61,7 +68,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = Role::find($id);
+        return view('admin_panel.roles.edit',compact('role'));
     }
 
     /**
@@ -73,7 +81,14 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::find($id);
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+        $role->name = $data['name'];
+        $role->save();
+        return redirect()->route('role.index');
+
     }
 
     /**

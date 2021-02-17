@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\notification_for_remind_delivery_borrow_command::class
     ];
 
     /**
@@ -25,6 +25,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        $schedule -> command('SendMail:NotificationForRemindDeliveryBorrow') ->daily()->at('00:00')->withoutOverlapping();;
     }
 
     /**
@@ -34,8 +36,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
-
+        $this->load(__DIR__.'/Commands/');
         require base_path('routes/console.php');
     }
 }

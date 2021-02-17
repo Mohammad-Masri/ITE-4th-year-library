@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Item_State;
 use Illuminate\Http\Request;
 
 class Item_StateController extends Controller
@@ -10,7 +11,7 @@ class Item_StateController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +20,8 @@ class Item_StateController extends Controller
      */
     public function index()
     {
-        //
+        $item_states = Item_State::all();
+        return view('admin_panel.item_states.index',compact('item_states'));
     }
 
     /**
@@ -29,7 +31,7 @@ class Item_StateController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin_panel.item_states.create');
     }
 
     /**
@@ -40,7 +42,11 @@ class Item_StateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $date = $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+        Item_State::create($date);
+        return redirect()->route('item_state.index');
     }
 
     /**
@@ -62,7 +68,8 @@ class Item_StateController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item_state = Item_State::find($id);
+        return view('admin_panel.item_states.edit',compact('item_state'));
     }
 
     /**
@@ -74,7 +81,14 @@ class Item_StateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item_state = Item_State::find($id);
+        $date = $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+        $item_state->name = $date['name'];
+        $item_state->save();
+        return redirect()->route('item_state.index');
+
     }
 
     /**

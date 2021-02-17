@@ -15,7 +15,7 @@ class CreateBorrowStatesTable extends Migration
     {
         Schema::create('borrow_states', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateBorrowStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('borrow__states');
+        Schema::dropIfExists('borrow_states');
     }
 }

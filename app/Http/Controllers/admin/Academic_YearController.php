@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Academic_Year;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class Academic_YearController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +20,8 @@ class Academic_YearController extends Controller
      */
     public function index()
     {
-        return view('admin_panel.academic_years.index');
+        $academic_years = Academic_Year::all();
+        return view('admin_panel.academic_years.index',compact('academic_years'));
     }
 
     /**
@@ -40,7 +42,8 @@ class Academic_YearController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Academic_Year::create(['name'=>$request->name]);
+        return redirect()->route('academic_year.index');
     }
 
     /**
@@ -51,7 +54,7 @@ class Academic_YearController extends Controller
      */
     public function show($id)
     {
-        return view('admin_panel.academic_years.detile');
+        //
     }
 
     /**
@@ -62,7 +65,8 @@ class Academic_YearController extends Controller
      */
     public function edit($id)
     {
-        //
+        $academic_year = Academic_Year::find($id);
+        return view('admin_panel.academic_years.edit',compact('academic_year'));
     }
 
     /**
@@ -74,7 +78,10 @@ class Academic_YearController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $academic_year = Academic_Year::find($id);
+        $academic_year->name = $request->name;
+        $academic_year->save();
+        return redirect()->route('academic_year.index');
     }
 
     /**

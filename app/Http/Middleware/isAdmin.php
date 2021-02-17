@@ -21,6 +21,7 @@ class isAdmin
         {
             return $next($request);
         }
-        return redirect('user/error');
+        //return redirect('user/error/notAdmin');
+        return back()->with('error_alert','حسابك لا يتمتع بصلاحيات الدخول لهذا الرابط');
     }
 }

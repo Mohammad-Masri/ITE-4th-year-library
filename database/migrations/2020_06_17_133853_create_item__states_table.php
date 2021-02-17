@@ -15,7 +15,7 @@ class CreateItemStatesTable extends Migration
     {
         Schema::create('item_states', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateItemStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item__states');
+        Schema::dropIfExists('item_states');
     }
 }

@@ -19,8 +19,11 @@ class CreateItemsTable extends Migration
             $table->text('desc');
             $table->integer('item_type_id');
             $table->integer('subject_id');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->integer('maintainer_id');
             $table->integer('item_state_id');
+            $table->tinyInteger('is_active');
+
             $table->timestamps();
         });
     }

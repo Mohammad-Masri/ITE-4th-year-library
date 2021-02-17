@@ -592,7 +592,7 @@ var Tweenable = (function () {
     ,'composeEasingObject': composeEasingObject
   });
 
-  // `root` is provided in the intro/outro files.
+  // `root` is provided in the intro/outro item_files.
 
   // A hook used for unit testing.
   if (typeof SHIFTY_DEBUG_NOW === 'function') {

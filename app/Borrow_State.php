@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Borrow_State extends Model
 {
     protected $table = 'borrow_states';
-
+    protected $fillable = ['name'];
 
     public function getBorrow()
     {

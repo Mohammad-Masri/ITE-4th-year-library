@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Item_Type;
 use Illuminate\Http\Request;
 
 class Item_TypeController extends Controller
@@ -11,7 +12,7 @@ class Item_TypeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
 
     /**
@@ -21,7 +22,8 @@ class Item_TypeController extends Controller
      */
     public function index()
     {
-        return view('admin_panel.item_types.index');
+        $item_types = Item_Type::all();
+        return view('admin_panel.item_types.index',compact('item_types'));
     }
 
     /**
@@ -42,7 +44,11 @@ class Item_TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $date = $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+        Item_Type::create($date);
+        return redirect()->route('item_type.index');
     }
 
     /**
@@ -53,7 +59,6 @@ class Item_TypeController extends Controller
      */
     public function show($id)
     {
-        return view('admin_panel.item_types.detile');
     }
 
     /**
@@ -64,7 +69,10 @@ class Item_TypeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item_type = Item_Type::find($id);
+
+        return view('admin_panel.item_types.edit',compact('item_type'));
+
     }
 
     /**
@@ -76,7 +84,13 @@ class Item_TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item_type = Item_Type::find($id);
+        $date = $request->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+        $item_type->name = $date['name'];
+        $item_type->save();
+        return redirect()->route('item_type.index');
     }
 
     /**

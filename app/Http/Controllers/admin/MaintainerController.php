@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Maintainer;
 use Illuminate\Http\Request;
 
 class MaintainerController extends Controller
@@ -10,7 +11,7 @@ class MaintainerController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin_auth');
+        $this->middleware(['admin_auth','is_active']);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +20,8 @@ class MaintainerController extends Controller
      */
     public function index()
     {
-        return view('admin_panel.maintainer.index');
+        $maintainers = Maintainer::all();
+        return view('admin_panel.maintainer.index',compact('maintainers'));
     }
 
     /**
@@ -40,7 +42,16 @@ class MaintainerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:maintainers'],
+            'mobile'=> ['required','numeric','min:10']
+        ]);
+
+        Maintainer::create($data);
+
+        return  redirect()->route('maintainer.index');
     }
 
     /**
@@ -51,7 +62,7 @@ class MaintainerController extends Controller
      */
     public function show($id)
     {
-        return view('admin_panel.maintainer.detile');
+        //
     }
 
     /**
@@ -62,7 +73,8 @@ class MaintainerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $maintainer = Maintainer::find($id);
+        return view('admin_panel.maintainer.edit',compact('maintainer'));
     }
 
     /**
@@ -74,7 +86,23 @@ class MaintainerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $maintainer = Maintainer::find($id);
+        $maintainer->email='';
+        $maintainer->save();
+
+        $data = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:maintainers'],
+            'mobile'=> ['required','numeric','min:10']
+        ]);
+        $maintainer->first_name = $data['first_name'];
+        $maintainer->last_name = $data['last_name'];
+        $maintainer->email = $data['email'];
+        $maintainer->mobile = $data['mobile'];
+        $maintainer->save();
+
+        return  redirect()->route('maintainer.index');
     }
 
     /**
